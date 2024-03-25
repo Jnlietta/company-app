@@ -12,6 +12,7 @@ mongoClient.connect('mongodb://0.0.0.0:27017', { useNewUrlParser: true, useUnifi
   }
   else {
     console.log('Successfully connected to the database');
+    const db = client.db('companyDB');
     const app = express();
 
     app.use(cors());
