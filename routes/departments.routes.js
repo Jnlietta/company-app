@@ -1,6 +1,6 @@
 const express = require('express');
-const router = express.Router();
 const ObjectId = require('mongodb').ObjectId;
+const router = express.Router();
 
 router.get('/departments', (req, res) => {
   req.db.collection('departments')
@@ -15,7 +15,15 @@ router.get('/departments', (req, res) => {
 });
 
 router.get('/departments/random', (req, res) => {
-  res.json(db.departments[Math.floor(Math.random() * db.length)]);
+  req.db.collection('departments')
+    .aggregate([{ $sample: { size: 1 } }])
+    .toArray()
+    .then((data) => {
+      res.json(data[0]);
+    })
+    .catch((err) => {
+      res.status(500).json({ message: err });
+    });
 });
 
 router.get('/departments/:id', (req, res) => {
