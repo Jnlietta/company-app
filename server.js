@@ -19,6 +19,11 @@ mongoClient.connect('mongodb://0.0.0.0:27017', { useNewUrlParser: true, useUnifi
     app.use(express.json());
     app.use(express.urlencoded({ extended: false }));
 
+    app.use((req, res, next) => {
+      req.db = db;
+      next();
+    });
+    
     app.use('/api', employeesRoutes);
     app.use('/api', departmentsRoutes);
     app.use('/api', productsRoutes);
