@@ -1,6 +1,7 @@
 const express = require('express');
 const ObjectId = require('mongodb').ObjectId;
 const router = express.Router();
+const Department = require('../models/department.model');
 
 router.get('/departments', (req, res) => {
   req.db.collection('departments')
@@ -38,17 +39,19 @@ router.get('/departments/:id', (req, res) => {
     });
 });
 
-router.post('/departments', (req, res) => {
-  const { name } = req.body;
+router.post('/departments', async (req, res) => {
 
-  req.db.collection('departments')
-    .insertOne({ name: name })
-    .then(() => {
-      res.json({ message: 'OK' });
-    })
-    .catch((err) => {
-      res.status(500).json({ message: err });
-    })
+  try {
+
+    const { name } = req.body;
+    const newDepartment = new Department({ name: name });
+    await newDepartment.save();
+    res.json({ message: 'OK' });
+
+  } catch(err) {
+    res.status(500).json({ message: err });
+  }
+
 });
 
 router.put('/departments/:id', (req, res) => {
