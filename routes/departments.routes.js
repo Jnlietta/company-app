@@ -37,7 +37,6 @@ router.get('/departments/:id', async (req, res) => {
 
 router.post('/departments', async (req, res) => {
   try {
-
     const { name } = req.body;
     const newDepartment = new Department({ name: name });
     await newDepartment.save();
@@ -46,7 +45,6 @@ router.post('/departments', async (req, res) => {
   } catch(err) {
     res.status(500).json({ message: err });
   }
-
 });
 
 router.put('/departments/:id', async (req, res) => {
