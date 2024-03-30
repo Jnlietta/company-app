@@ -28,4 +28,4 @@ after(() => {
     mongoose.models = {};
   });
 
-  //pytania do mentora 30.2
+  //pytania do mentora 30.2 nie rozumiem jak ma działać ten test, jak przechodzą dane przez ten model
