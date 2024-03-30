@@ -10,7 +10,7 @@ describe('Department', () => {
         expect(err.errors.name).to.exist;
       });  
     });
-    
+
     it('should throw an error if "name" is not a string', () => {
 
         const cases = [{}, []];
@@ -22,6 +22,34 @@ describe('Department', () => {
           });
         }
     });  
+
+    it('should throw an error if "name" is too short or too long', () => {
+
+        const cases = ['Abc', 'abcd', 'Lorem Ipsum, Lorem Ip']; // we test various cases, some of them are too short, some of them are too long
+        for(let name of cases) {
+          const dep = new Department({ name });
+      
+          dep.validateSync(err => {
+            expect(err.errors.name).to.exist;
+          });
+      
+        }
+      
+      });
+
+      it('should not throw an error if "name" is okay', () => {
+
+        const cases = ['Abcde', 'Lorem Ipsum', 'Andrew Adrianocinnos']; // we test various cases, some are min length some are max length
+        for(let name of cases) {
+          const dep = new Department({ name });
+      
+          dep.validateSync(err => {
+            expect(err).to.not.exist;
+          });
+      
+        }
+      
+      });
 });
 
 
