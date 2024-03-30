@@ -27,3 +27,5 @@ describe('Employee', () => {
 after(() => {
     mongoose.models = {};
   });
+
+  //pytania do mentora 30.2
