@@ -44,4 +44,17 @@ describe('Employee', () => {
             await Employee.deleteMany();
         });
     });
+    
+    describe('Creating data', () => {
+
+        it('should insert new document with "insertOne" method', async () => {
+            const emp = new Employee({ firstName: 'firstName #3', lastName: 'lastName #3', department: 'department #3' });
+            await emp.save();
+            expect(emp.isNew).to.be.false;
+          });
+      
+        after(async () => {
+            await Employee.deleteMany();
+        });
+    });
 });
