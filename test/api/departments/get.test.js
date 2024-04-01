@@ -1,6 +1,7 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const server = require('../../server.js');
+const Department = require('../../models/department.model');
 
 chai.use(chaiHttp);
 
@@ -15,10 +16,6 @@ describe('GET /api/departments', () => {
         const testDepTwo = new Department({ _id: '5d9f1159f81ce8d1ef2bee48', name: 'Department #2' });
         await testDepTwo.save();
     });
-      
-    after(async () => {
-        await Department.deleteMany();
-    });
 
     it('/ should return all departments', () => {
 
@@ -30,5 +27,9 @@ describe('GET /api/departments', () => {
   
     it('/random should return one random department', () => {
   
+    });
+          
+    after(async () => {
+        await Department.deleteMany();
     });
 });
