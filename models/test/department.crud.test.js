@@ -11,9 +11,4 @@ describe('Department', () => {
           console.error(err);
         }
     });
-
-    after(() => {
-        mongoose.models = {};
-    });
-
 });
