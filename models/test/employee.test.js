@@ -30,11 +30,12 @@ describe('Employee', () => {
           });
         }
     });
+
+    after(() => {
+        mongoose.models = {};
+      });
 });
 
-after(() => {
-    mongoose.models = {};
-  });
 
   //pytania do mentora 30.2 nie rozumiem jak ma działać ten test, niezależnie od tego
   //co wpisze test jest zawsze pozytywny? dlaczego, skad mam pewnosc ze przyjelam sluszne zalozenie?
