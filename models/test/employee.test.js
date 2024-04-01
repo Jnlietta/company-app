@@ -7,18 +7,26 @@ describe('Employee', () => {
         const dep = new Employee({}); 
     
       dep.validateSync(err => {
-        expect(err.errors.name).to.exist;
+        expect(err.errors.firstName).to.exist;
+        expect(err.errors.lastName).to.exist;
+        expect(err.errors.department).to.exist;
       });  
     });
 
     it('should throw an error if "firstName, lastName, department" is not a string', () => {
 
         const cases = [{}, []];
-        for(let data of cases) {
-          const dep = new Employee({ data });
+        for (let data of cases) {
+            const employee = new Employee({ 
+                firstName: data,
+                lastName: data,
+                department: data
+            });
       
-          dep.validateSync(err => {
-            expect(err.errors.data).to.exist;
+          employee.validateSync(err => {
+            expect(err.errors.firstName).to.exist;
+            expect(err.errors.lastName).to.exist;
+            expect(err.errors.department).to.exist;
           });
         }
     });
@@ -28,4 +36,5 @@ after(() => {
     mongoose.models = {};
   });
 
-  //pytania do mentora 30.2 nie rozumiem jak ma działać ten test, jak przechodzą dane przez ten model
+  //pytania do mentora 30.2 nie rozumiem jak ma działać ten test, niezależnie od tego
+  //co wpisze test jest zawsze pozytywny? dlaczego, skad mam pewnosc ze przyjelam sluszne zalozenie?
