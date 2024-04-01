@@ -57,4 +57,40 @@ describe('Employee', () => {
             await Employee.deleteMany();
         });
     });
+
+    describe('Updating data', () => {
+
+        beforeEach(async () => {
+            const testEmpOne = new Employee({ firstName: 'firstName #1', lastName: 'lastName #1', department: 'department #1' });
+            await testEmpOne.save();
+
+            const testEmpTwo = new Employee({ firstName: 'firstName #2', lastName: 'lastName #2', department: 'department #2' });
+            await testEmpTwo.save();
+        });
+
+        it('should properly update one document with "updateOne" method', async () => {
+            await Employee.updateOne({ firstName: 'firstName #1' }, { $set: { firstName: '=firstName #1=' }});
+            const updatedEmp = await Employee.findOne({ firstName: '=firstName #1=' });
+            expect(updatedEmp).to.not.be.null;
+        });
+      
+        it('should properly update one document with "save" method', async () => {
+            const emp = await Employee.findOne({ lastName: 'lastName #2' });
+            emp.lastName = '=lastName #2=';
+            await emp.save();
+          
+            const updatedEmp = await Employee.findOne({ lastName: '=lastName #2=' });
+            expect(updatedEmp).to.not.be.null;
+        });
+      
+        it('should properly update multiple documents with "updateMany" method', async () => {
+            await Employee.updateMany({}, { $set: { department: 'Ubdated!' }});
+            const updatedEmp = await Employee.find({ department: 'Ubdated!' });
+            expect(updatedEmp.length).to.be.equal(2);
+        });
+
+        afterEach(async () => {
+            await Employee.deleteMany();
+        });
+    });
 });
