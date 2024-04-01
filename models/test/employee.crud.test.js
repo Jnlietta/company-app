@@ -93,4 +93,30 @@ describe('Employee', () => {
             await Employee.deleteMany();
         });
     });
+
+    describe('Removing data', () => {
+        beforeEach(async () => {
+            const testEmpOne = new Employee({ firstName: 'firstName #1', lastName: 'lastName #1', department: 'department #1' });
+            await testEmpOne.save();
+
+            const testEmpTwo = new Employee({ firstName: 'firstName #2', lastName: 'lastName #2', department: 'department #2' });
+            await testEmpTwo.save();
+          });
+
+        it('should properly remove one document with "deleteOne" method', async () => {
+            await Employee.deleteOne({ firstName: 'firstName #1' });
+            const removeEmployee = await Employee.findOne({ firstName: 'firstName #1' });
+            expect(removeEmployee).to.be.null;
+        });
+      
+        it('should properly remove multiple documents with "deleteMany" method', async () => {
+            await Employee.deleteMany();
+            const employees = await Employee.find();
+            expect(employees.length).to.be.equal(0);
+        });
+
+        afterEach(async () => {
+            await Employee.deleteMany();
+          });
+    });
 });
